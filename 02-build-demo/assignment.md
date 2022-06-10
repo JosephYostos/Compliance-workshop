@@ -67,6 +67,12 @@ Verify that both pods are up and running:
 kubectl get pods -A | grep multitool
 ```
 
+Both pods should be Running:
+
+```bash
+default                      multitool                                        1/1     Running            0              12s
+hipstershop                  multitool                                        1/1     Running            0              31m
+```
 
 ✅ Service graph
 ==============

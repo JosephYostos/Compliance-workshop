@@ -1,14 +1,14 @@
 ---
-slug: showing-the-service
+slug: security-policies
 id: hq5xvisin8sa
 type: challenge
-title: Viewing NGINX
-teaser: View the service in an embedded tab
+title: create Policies
+teaser: Apply Security Policies to restrict access 
 notes:
 - type: text
   contents: |-
-    To make sure you can view the service,
-    we configured an embedded tab to point to the port on the VM.
+Now that we've deployed our web store application, in order to comply with the PCI DSS standard we have to secure it. This means applying Security Policies to restrict access as a much as possible. In this section we will walk through building up a robust security policy for our application.
+
 tabs:
 - title: NodePort
   type: service

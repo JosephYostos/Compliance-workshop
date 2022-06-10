@@ -6,10 +6,10 @@ title: Connect Kubernetes cluster to Calico Cloud
 teaser: secure your clusetr in 5 minutes
 notes:
 - type: video
-  url: ../assets/ZTWS.mp4
+  url: ../assets/Compliance.mp4
 - type: text
   contents: |-
-    This track uses a single node Kubernetes cluster on a sandbox virtual machine.
+    This track uses a two node Kubernetes cluster on a sandbox virtual machine.
     Please wait while we boot the VM for you and start Kubernetes.
 
     ## Objectives

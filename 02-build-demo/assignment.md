@@ -3,7 +3,7 @@ slug: build-demo
 id: exgsp410kswu
 type: challenge
 title: Build demo application
-teaser: Use a NodePort to expose the NGINX web server
+teaser: Deploy Hipstershop microservices-based application 
 notes:
 - type: text
   contents: You've just joined this cluster to calico cloud. let's start deploying

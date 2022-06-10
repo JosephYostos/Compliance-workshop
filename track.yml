@@ -1,15 +1,15 @@
-slug: calico-zero-trust
+slug: compliance-workshop
 id: ys0xh5z2ejif
 type: track
-title: Zero-Trust workload security best practicies
-teaser: Secure kubernetes and containers workloads using Calico Cloud.
+title: Compliance Workshop
+teaser: introduction to the Calico features that support PCI and SOC 2 compliance.
 description: |-
-  Learn how to secure kubernetes and containers workloads using Calico Cloud.
+  The intent of this workshop is to provide an introduction to the Calico features that support PCI and SOC 2 compliance.
 
   **This track demonstrates how to:**
     - Design and build calico security policies
-    - Understand DNS-based policies
-    - simplifying security design using NetworkSets
+    - Advanced reporting and visibility
+    - End-to-end encryption
 icon: https://cdn.instruqt.com/assets/templates/kubernetes.png
 level: beginner
 tags:

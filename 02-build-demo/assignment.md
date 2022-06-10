@@ -23,6 +23,8 @@ timelimit: 600
 
 🚀 Let's build an app
 ==============
+**Deploy Hipstershop application**
+
 First, let's create a namespace called 'hipstershop' for the application:
 
 ```

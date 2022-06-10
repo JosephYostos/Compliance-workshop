@@ -1,0 +1,18 @@
+version: "3"
+virtualmachines:
+- name: controlplane
+  image: ubuntu-os-cloud/ubuntu-1804-bionic-v20220505
+  shell: /bin/bash
+  machine_type: n1-standard-4
+  allow_external_ingress:
+  - http
+  - https
+  - high-ports
+- name: node01
+  image: ubuntu-os-cloud/ubuntu-1804-bionic-v20220505
+  shell: /bin/bash
+  machine_type: n1-standard-4
+  allow_external_ingress:
+  - http
+  - https
+  - high-ports

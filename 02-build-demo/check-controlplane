@@ -1,0 +1,5 @@
+#!/bin/bash
+
+kubectl get deployment -n hipstershop frontend || fail-message "I expected a hipstershop deployment"  
+
+

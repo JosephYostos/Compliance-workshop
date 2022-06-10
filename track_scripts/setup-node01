@@ -1,0 +1,31 @@
+#!/bin/bash 
+
+# Wait for the Instruqt host bootstrap to finish
+until [ -f /opt/instruqt/bootstrap/host-bootstrap-completed ]
+do
+    sleep 1
+done
+
+# Wait for the Kubernetes API server to become available
+#while ! curl --silent --fail --output /dev/null http://localhost:8001/api 
+#do
+#    sleep 1 
+#done
+
+# Enable bash completion for kubectl
+#echo "complete -F __start_kubectl k" >> /root/.bashrc
+#echo "source /usr/share/bash-completion/bash_completion" >> /root/.bashrc
+
+# install Kubeadm for worker node
+curl https://raw.githubusercontent.com/JosephYostos/kubeadm-installation/main/worker.sh |bash
+
+# join kubeadm cluster
+until [ -f /token ]
+do
+     sleep 1
+     scp -o StrictHostKeyChecking=no controlplane:/token / 2>/dev/null
+done
+TOKEN=$( cat /token )
+kubeadm join controlplane:6443 --token $TOKEN --discovery-token-unsafe-skip-ca-verification
+
+

@@ -1,0 +1,22 @@
+slug: calico-zero-trust
+id: ys0xh5z2ejif
+type: track
+title: Zero-Trust workload security best practicies
+teaser: Secure kubernetes and containers workloads using Calico Cloud.
+description: |-
+  Learn how to secure kubernetes and containers workloads using Calico Cloud.
+
+  **This track demonstrates how to:**
+    - Design and build calico security policies
+    - Understand DNS-based policies
+    - simplifying security design using NetworkSets
+icon: https://cdn.instruqt.com/assets/templates/kubernetes.png
+level: beginner
+tags:
+- ""
+owner: tigera
+developers:
+- joseph@tigera.io
+private: true
+published: false
+checksum: "16231596686826359389"

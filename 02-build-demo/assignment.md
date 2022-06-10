@@ -74,7 +74,7 @@ default                      multitool                                        1/
 hipstershop                  multitool                                        1/1     Running            0              31m
 ```
 
-✅ Service graph
+✅ Check Hipstershop in calico UI
 ==============
 
 Use Calico Cloud UI to discover the hipstershop application using the "service graph". To view resources in the `hipstershop` namespace click on the `Service Graph` icon on the left menu which will display a top level view of the cluster resources:

@@ -41,6 +41,31 @@ Verify Pods are Running
 kubectl get pods -n hipstershop
 ```
 
+**Deploy Network-MultiTool Pod in the default namespace**
+
+The Network-MultiTool pod will be used in two namespaces to test the created network policies.
+
+First, deploy the MultiTool into the default namespace:
+
+```bash
+kubectl run multitool --image=wbitt/network-multitool
+```
+
+**Deploy a second copy of Network-Multitool to the hipstershop namespace**
+
+Next, deploy a copy of the Mutlitool into the hipstershop namespace:
+
+```bash
+kubectl run multitool -n hipstershop --image=wbitt/network-multitool
+```
+
+Verify that both pods are up and running:
+
+```bash
+kubectl get pods -A | grep multitool
+```
+
+
 ✅ Service graph
 ==============
 

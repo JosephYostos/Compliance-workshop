@@ -115,7 +115,7 @@ EOF
 After creating our tiers, we'll apply some general policies to them before we start creating our main policies. These policies include allowing traffic to kube-dns from all pods, passing traffic that doesn't explicitly match in the tier and finally a default deny policy.
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-showing-the-service/mainfest/2.2-pass-dns-default-deny-policy.yaml
+kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-create-policies/mainfest/2.2-pass-dns-default-deny-policy.yaml
 ```
 
 
@@ -126,7 +126,7 @@ Now that we have our foundation in the Policy Tiers, we need to start applying p
 We will also add a 'pci-allowlist' policy because we need a way to allow traffic to the frontend of the application as well as allowing DNS lookups from the PCI pods to the kube-dns system.
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-showing-the-service/mainfest/2.3-pci-isolation-policy.yaml
+kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-create-policies/mainfest/2.3-pci-isolation-policy.yaml
 ```
 Now we can verify this is working as expected
 
@@ -135,7 +135,7 @@ Now we can verify this is working as expected
 To test, we'll use our MultiTool pods both inside of the 'hipstershop' namespace and in the default namespace. Before we can complete the testing from the default namespace, we'll have to apply a policy that allows egress traffic from the pods in the default namespace. This is because we're applying an egress policy in an earlier step, so now, if we don't allow it at some point it will be denied by default. To get around this we'll apply this policy:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-showing-the-service/mainfest/2.4-default-egress-policy.yaml
+kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-create-policies/mainfest/2.4-default-egress-policy.yaml
 ```
 
 
@@ -255,13 +255,13 @@ recommendationservice | productcatalogservice | 3550
 This results in the following policy which we can now apply to the app-hipstershop tier using:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-showing-the-service/mainfest/2.6-hipstershop-policy.yaml
+kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-create-policies/mainfest/2.6-hipstershop-policy.yaml
 ```
 we will have to go back and make a modification to our PCI Restriction and Tenant Isolation Policies to completely enable our microsegmentation. Right now the PCI policy allows communication between all the 'pci=true' pods and the Tenant Isolation policy allows open communication between pods with the 'tenant=hipstershop' label. We want to pass this decision to the 'app-hipstershop' tier so we will apply the following update:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-showing-the-service/mainfest/2.7-pci-policy-update.yaml
-kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-showing-the-service/mainfest/2.8-tenant-isolation-update.yaml
+kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-create-policies/mainfest/2.7-pci-policy-update.yaml
+kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-create-policies/mainfest/2.8-tenant-isolation-update.yaml
 ```
 
 Once this is applied, the policy inside of the 'app-hipstershop' tier should apply and give us microsegmentation inside of our application namespace. The Policy Board should show traffic being allowed by most of our policies:

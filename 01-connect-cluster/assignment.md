@@ -16,8 +16,8 @@ notes:
 
     In this track, this is what you'll learn:
     - Design and build calico security policies
-    - Understand DNS-based policies
-    - simplifying security design using NetworkSets
+    - Advanced reporting and visibility
+    - End-to-end encryption
 tabs:
 - title: Shell
   type: terminal

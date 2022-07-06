@@ -69,6 +69,11 @@ Make sure that state is **done**
 
 Installation process will take around 5 minutes
 
+
+
+🏁 Finish
+=========
+
 Configure log flush intervals in the cluster, we will use 10s instead of default value 300s for lab testing only.
 
 ```
@@ -76,8 +81,4 @@ kubectl patch felixconfiguration.p default -p '{"spec":{"flowLogsFlushInterval":
 kubectl patch felixconfiguration.p default -p '{"spec":{"dnsLogsFlushInterval":"10s"}}'
 kubectl patch felixconfiguration.p default -p '{"spec":{"flowLogsFileAggregationKindForAllowed":1}}'
 ```
-
-🏁 Finish
-=========
-
 To complete this challenge, press **NEXT**.

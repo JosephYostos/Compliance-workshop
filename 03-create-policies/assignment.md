@@ -22,10 +22,10 @@ difficulty: basic
 timelimit: 600
 ---
 
-💡 Labeling
+ Labeling
 ================
 
-**(In kubernetes world, labels will make your life easier)** 
+💡 **(In kubernetes world, labels will make your life easier)** 
 
 First, lets manually apply a label to the multitool pod. 
 
@@ -75,8 +75,19 @@ shippingservice-85c8d66568-jrdsf         1/1     Running   0          28h   app=
 
 Now that all pods are labelled, lets start applying some policies.
 
-💡 Policy Tiers
+ Policy Tiers
 ================
+
+💡 *Tiers* are a hierarchical construct used to group policies and enforce higher precedence policies that cannot be circumvented by other teams. 
+
+Next, you can determine the priority of policies in tiers (from top to bottom). In the following example, that platform and security tiers use Calico Enterprise global network policies that apply to all pods, while developer teams can safely manage pods within namespaces for their applications and microservices.
+
+![Image Description](../assets/policy-board.png) 
+
+Tiers are ordered from left to right, starting with the highest priority tiers.
+Policies are processed in sequential order from top to bottom.
+
+![Image Description](../assets/policy-board.png) 
 
 For this workshop, we'll be creating 3 tiers in the cluster and utilizing the default tier as well:
 
@@ -113,17 +124,26 @@ spec:
 EOF
 ```
 
-💡  General Policies
+Now go to calico cloud Ui and check the created tiers 
+
+![Image Description](../assets/policy-board.png)
+
+  Global Policies
 ================
 
-After creating our tiers, we'll apply some general policies to them before we start creating our main policies. These policies include allowing traffic to kube-dns from all pods, passing traffic that doesn't explicitly match in the tier and finally a default deny policy.
+💡*Global* Network policies is not a namespaced resource, it applies to the whole cluster. 
+
+After creating our tiers, we'll apply some general global policies to them before we start creating our main policies. These policies include allowing traffic to kube-dns from all pods, passing traffic that doesn't explicitly match in the tier and finally a default deny policy.
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-create-policies/mainfest/2.2-pass-dns-default-deny-policy.yaml
 ```
 
+Now go to calico cloud Ui and check the created policies under each tier
 
-💡  Security Policies
+![Image Description](../assets/policy-board.png)
+
+  Security Policies
 ================
 Now that we have our foundation in the Policy Tiers, we need to start applying policy to restrict traffic. The first policy we will apply will only allow traffic to flow between pods with the label of 'pci=true'. Pods without the 'pci=true' label will also be able to freely communicate with each other.
 
@@ -134,7 +154,8 @@ kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-works
 ```
 Now we can verify this is working as expected
 
-💡  PCI Policy Testing
+
+  PCI Policy Testing
 ================
 To test, we'll use our MultiTool pods both inside of the 'hipstershop' namespace and in the default namespace. Before we can complete the testing from the default namespace, we'll have to apply a policy that allows egress traffic from the pods in the default namespace. This is because we're applying an egress policy in an earlier step, so now, if we don't allow it at some point it will be denied by default. To get around this we'll apply this policy:
 
@@ -227,7 +248,7 @@ bash-5.1# nc -zvw 3 10.0.214.232 7070
 ```
 We can successfully connect from the MultiTool pod in the default namespace to a service in the hipstershop namespace as long as they both have the 'pci=true' label.
 
-💡 Microsegmentation with Hipstershop
+ Microsegmentation with Hipstershop
 ===============
 To perform the microsegmentation we will need to know more about how the application communicates between the services. The following diagram provides all the information we need to know:
 
@@ -272,7 +293,7 @@ Once this is applied, the policy inside of the 'app-hipstershop' tier should app
 
 ![Image Description](../assets/policy-board.png)
 
-💡 Limiting Egress Access
+ Limiting Egress Access
 ============
 Now that we've implemented our microsegmentation policy, there's one last type of policy we should apply; a global egress access policy.
 
@@ -363,6 +384,6 @@ As expected our pings to google.ca and tigera.io are successful but our ping to 
 
 Now our policies are complete. 
 
-Finish
+🏁 Finish
 ============
 Press **Next** to continue to the next challenge.

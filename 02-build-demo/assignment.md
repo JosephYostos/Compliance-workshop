@@ -6,8 +6,10 @@ title: Build demo application
 teaser: Deploy Hipstershop microservices-based application 
 notes:
 - type: text
-  contents: You've just joined this cluster to calico cloud. let's start deploying
-    some applications
+  contents: 
+    In this challange we will build a web-based e-commerce app where users can browse items, add them to the cart, and purchase them. 
+    This application called "Hipstershop"
+
 tabs:
 - title: Shell
   type: terminal
@@ -21,9 +23,8 @@ difficulty: basic
 timelimit: 600
 ---
 
-🚀 Let's build an app
+🚀 Let's build our app Hipstershop
 ==============
-**Deploy Hipstershop application**
 
 First, let's create a namespace called 'hipstershop' for the application:
 
@@ -42,6 +43,9 @@ Verify Pods are Running
 ```
 kubectl get pods -n hipstershop
 ```
+
+🚀 Now, we deploy our testing tools
+==============
 
 **Deploy Network-MultiTool Pod in the default namespace**
 

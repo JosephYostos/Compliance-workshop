@@ -44,7 +44,7 @@ Verify Pods are Running
 kubectl get pods -n hipstershop
 ```
 
-🚀 Now, we deploy our testing tools
+🚀 Now, we need some testing containers
 ==============
 
 **Deploy Network-MultiTool Pod in the default namespace**

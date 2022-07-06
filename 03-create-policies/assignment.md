@@ -22,8 +22,10 @@ difficulty: basic
 timelimit: 600
 ---
 
-💡 Label Examples
+💡 Labeling
 ================
+
+**(In kubernetes world, labels will make your life easier)** 
 
 First, lets manually apply a label to the multitool pod. 
 
@@ -35,12 +37,14 @@ We can then see the resulting label using:
 
 ```bash
 kubectl get pod multitool --show-labels
+```
 
+```
 NAME        READY   STATUS    RESTARTS   AGE    LABELS
 multitool   1/1     Running   0          2d6h   mylabel=true,run=multitool
 ```
 
-Now lets use this to attach a PCI label to our application pods. Rather than apply the label one by one, label all pods in the hipstershop namespace with 'pci=true' with the following command:
+Now lets attach a PCI label to our application pods. Rather than apply the label one by one, label all pods in the hipstershop namespace with 'pci=true' with the following command:
 
 ```bash
 kubectl label pods --all -n hipstershop pci=true
@@ -69,7 +73,7 @@ redis-cart-74594bd569-vg25j              1/1     Running   0          28h   app=
 shippingservice-85c8d66568-jrdsf         1/1     Running   0          28h   app=shippingservice,pci=true,pod-template-hash=85c8d66568
 ```
 
-Now that the pods are labelled, lets start applying some policy to them.
+Now that all pods are labelled, lets start applying some policies.
 
 💡 Policy Tiers
 ================

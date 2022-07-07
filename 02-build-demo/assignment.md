@@ -1,15 +1,14 @@
 ---
 slug: build-demo
-id: exgsp410kswu
+id: mca17ydontzs
 type: challenge
 title: Build demo application
-teaser: Deploy Hipstershop microservices-based application 
+teaser: Deploy Hipstershop microservices-based application
 notes:
 - type: text
-  contents: 
-    In this challange we will build a web-based e-commerce app where users can browse items, add them to the cart, and purchase them. 
-    This application called "Hipstershop"
-
+  contents: In this challange we will build a web-based e-commerce app where users
+    can browse items, add them to the cart, and purchase them. This application called
+    "Hipstershop"
 tabs:
 - title: Shell
   type: terminal

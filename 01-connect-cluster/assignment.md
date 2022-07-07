@@ -1,6 +1,6 @@
 ---
 slug: connect-cluster
-id: etaqqcwy4j0g
+id: bc0fb6hlqipx
 type: challenge
 title: Connect Kubernetes cluster to Calico Cloud
 teaser: secure your clusetr in 5 minutes

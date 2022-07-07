@@ -1,9 +1,8 @@
 ---
 slug: reports-visualization
-id: xa44d04jh20i
+id: nhlpcmd146jl
 type: challenge
 title: Reports & Visualization
-teaser: 
 tabs:
 - title: Shell
   type: terminal

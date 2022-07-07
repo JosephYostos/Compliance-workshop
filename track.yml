@@ -1,5 +1,5 @@
 slug: compliance-workshop
-id: ys0xh5z2ejif
+id: g1enuyqndo79
 type: track
 title: Compliance Workshop
 teaser: introduction to the Calico features that support PCI and SOC 2 compliance.
@@ -19,4 +19,4 @@ developers:
 - joseph@tigera.io
 private: true
 published: false
-checksum: "16231596686826359389"
+checksum: "1593999658125658772"

@@ -139,99 +139,71 @@ After creating our tiers, we'll apply some general global policies to them befor
 kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-create-policies/mainfest/2.2-pass-dns-default-deny-policy.yaml
 ```
 
-Now go to calico cloud Ui and check the created policies under each tier
+Now go to calico cloud UI and check the created policies under each tier
 
 ![Image Description](../assets/policy-board.png)
 
   Security Policies
 ================
-Now that we have our foundation in the Policy Tiers, we need to start applying policy to restrict traffic. The first policy we will apply will only allow traffic to flow between pods with the label of 'pci=true'. Pods without the 'pci=true' label will also be able to freely communicate with each other.
+Now that we have our foundation in the Policy Tiers, we need to start applying policies to restrict traffic. 
 
-We will also add a 'pci-allowlist' policy because we need a way to allow traffic to the frontend of the application as well as allowing DNS lookups from the PCI pods to the kube-dns system.
+In this example, we will apply two global policies:
+- pci-restrict:  allow traffic to flow between pods with the label 'pci=true'.
+- pci-allowlist:  allow ingress traffic to the frontend over port 8080
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-create-policies/mainfest/2.3-pci-isolation-policy.yaml
 ```
-Now we can verify this is working as expected
+Now go to calico cloud UI and make sure the two policies have created under the security tier.
 
+![Image Description](../assets/policy-board.png)
+
+Let's do some testing.
 
   PCI Policy Testing
 ================
-To test, we'll use our MultiTool pods both inside of the 'hipstershop' namespace and in the default namespace. Before we can complete the testing from the default namespace, we'll have to apply a policy that allows egress traffic from the pods in the default namespace. This is because we're applying an egress policy in an earlier step, so now, if we don't allow it at some point it will be denied by default. To get around this we'll apply this policy:
+To test, we'll use our MultiTool pods both inside of the 'hipstershop' namespace and in the default namespace. 
+
+We will run two tests:
+- First, Test connectivity  inside the 'hipstershop' namespace where all pods has label 'pci=true'.
+- Second, Test connectivity from pod outside hipstershop namespace without the 'pci=true' label.
+
+Before we start we need to allow egress traffic from the pods in the default namespace:
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-create-policies/mainfest/2.4-default-egress-policy.yaml
 ```
 
+Now, let's run our test
 
-Before we start testing, we're going to get the addresses of all the Online Boutique services so we can use them in the testing to follow. To do this we'll run the following command and keep the output handy:
+1. Test connectivity inside the 'hipstershop' namespace where all pods has label 'pci=true'.
 
+From 'multitool' to 'cartservice' in 'hipstershop' namespace:
 ```bash
-kubectl get svc -n hipstershop -o wide
+kubectl -n hipstershop exec -t multitool -- sh -c 'nc -zvw 3 cartservice 7070'
 ```
+From 'multitool' to 'frontend' in 'hipstershop' namespace:
 
-Example output:
 ```bash
-$ kubectl get svc -n hipstershop
-NAME                    TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)        AGE
-adservice               ClusterIP      10.0.131.26    <none>          9555/TCP       4h37m
-cartservice             ClusterIP      10.0.214.232   <none>          7070/TCP       4h37m
-checkoutservice         ClusterIP      10.0.162.114   <none>          5050/TCP       4h37m
-currencyservice         ClusterIP      10.0.227.232   <none>          7000/TCP       4h37m
-emailservice            ClusterIP      10.0.72.153    <none>          5000/TCP       4h37m
-frontend                ClusterIP      10.0.41.230    <none>          80/TCP         4h37m
-frontend-external       LoadBalancer   10.0.209.155   51.143.16.163   80:30113/TCP   4h37m
-paymentservice          ClusterIP      10.0.85.72     <none>          50051/TCP      4h37m
-productcatalogservice   ClusterIP      10.0.60.54     <none>          3550/TCP       4h37m
-recommendationservice   ClusterIP      10.0.20.46     <none>          8080/TCP       4h37m
-redis-cart              ClusterIP      10.0.160.215   <none>          6379/TCP       4h37m
-shippingservice         ClusterIP      10.0.77.30     <none>          50051/TCP      4h37m
-```
-First, from inside of the 'hipstershop' namespace, we'll exec into the multitool pod and connect to the 'frontend' as well as try to connect to the 'cartservice' directly. To do this we will use NetCat and Curl.
-
-From the above output, we know that our 'cartservice' is has an address of '10.0.214.232'.
-
-Exec into the pod:
-```bash
-kubectl exec -n hipstershop multitool --stdin --tty -- /bin/bash
-```
-
-Test connectivity to 'cartservice' directly:
-```bash
-bash-5.1# nc -zvw 3 10.0.214.232 7070
-10.0.214.232 (10.0.214.232:7070) open
-```
-And connectivity to the 'frontend':
-```bash
-bash-5.1# curl -I 10.0.41.230
-HTTP/1.1 200 OK
-Set-Cookie: shop_session-id=1939f999-1237-4cc7-abdb-949423eae483; Max-Age=172800
-Date: Wed, 26 Jan 2022 20:14:20 GMT
-Content-Type: text/html; charset=utf-8
+kubectl -n hipstershop exec -t multitool -- sh -c 'curl -I frontend 2>/dev/null | grep -i http'
 ```
 As expected, we can reach both services from a pod with the pci=true label.
 
-Now lets try from a pod without the 'pci=true' label that is outside of the namespace. To do this, we'll use our multitool pod in the default namespace:
+2. Let's try from a pod without the 'pci=true' label that is outside of the namespace. To do this, we'll use our multitool pod in the default namespace:
 
+From 'multitool' in 'default' namespace to 'cartservice' in 'hipstershop' namespace:
 ```bash
-kubectl exec multitool --stdin --tty -- /bin/bash
+kubectl exec -t multitool -- sh -c 'nc -zvw 3 cartservice.hipstershop 7070'
 ```
 
+From 'multitool' in 'default' namespace to 'frontend' in 'hipstershop' namespace:
 ```bash
-bash-5.1# nc -zvw 3 10.0.214.232 7070
-nc: 10.0.214.232 (10.0.214.232:7070): Operation timed out
-```
-```bash
-bash-5.1# curl -I 10.49.14.192
-HTTP/1.1 200 OK
-Set-Cookie: shop_session-id=772c5095-11f5-4bb0-9d42-0ef8dcda9707; Max-Age=172800
-Date: Wed, 26 Jan 2022 20:21:54 GMT
-Content-Type: text/html; charset=utf-8
+kubectl exec -t multitool -- sh -c 'curl -I frontend.hipstershop 2>/dev/null | grep -i http'
 ```
 
-As expected, we can connect to 'frontend' because it has a policy allowing it but we can't connect to the cartservice on 7070 because of our PCI isolation policy.
+As expected, we can connect to 'frontend' because of policy "pci-allowlist" that allows traffic from anywhere to frontend, but we can't connect to the cartservice on 7070 because of our PCI isolation policy.
 
-Let's add the 'pci=true' label to the pod:
+Let's add the 'pci=true' label to the multitool pod in the 'default' namespace:
 
 ```bash
 kubectl label pod multitool pci=true
@@ -240,13 +212,9 @@ kubectl label pod multitool pci=true
 And we can test again:
 
 ```bash
-tigera@bastion:~$ kc exec multitool --stdin --tty -- /bin/bash
+kubectl exec -t multitool -- sh -c 'nc -zvw 3 cartservice.hipstershop 7070
 ```
-```bash
-bash-5.1# nc -zvw 3 10.0.214.232 7070
-10.0.214.232 (10.0.214.232:7070) open
-```
-We can successfully connect from the MultiTool pod in the default namespace to a service in the hipstershop namespace as long as they both have the 'pci=true' label.
+Now, we can successfully connect from the MultiTool pod in the default namespace to a service in the hipstershop namespace as long as they both have the 'pci=true' label.
 
  Microsegmentation with Hipstershop
 ===============

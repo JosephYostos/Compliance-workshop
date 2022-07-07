@@ -57,23 +57,22 @@ Copy the installation script and use the terminal tab to run it in your cluster
 
 ![Image Description](../assets/script.png)
 
-🚀 Validate what we have done
+ Validate what we have done
 ==============
+
+Installation process will take around 5 minutes
 
 Use the terminal to check the calico cloud instalation status:
 
 ```
 kubectl get installer default --namespace calico-cloud -o jsonpath --template '{.status}'
 ```
-Make sure that state is **done**
 
-Installation process will take around 5 minutes
+once installtion complete the state will change from **installing** to **done**
+Make sure that state is **done** before you move to the next challange
 
-
-
-🏁 Finish
-=========
-
+ Configure log flush intervals
+==============
 Configure log flush intervals in the cluster, we will use 10s instead of default value 300s for lab testing only.
 
 ```
@@ -81,4 +80,8 @@ kubectl patch felixconfiguration.p default -p '{"spec":{"flowLogsFlushInterval":
 kubectl patch felixconfiguration.p default -p '{"spec":{"dnsLogsFlushInterval":"10s"}}'
 kubectl patch felixconfiguration.p default -p '{"spec":{"flowLogsFileAggregationKindForAllowed":1}}'
 ```
+
+🏁 Finish
+=========
+
 To complete this challenge, press **NEXT**.

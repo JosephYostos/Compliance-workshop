@@ -22,7 +22,7 @@ difficulty: basic
 timelimit: 600
 ---
 
-🚀 Let's build our app Hipstershop
+🚀 Let's build our Hipstershop application
 ==============
 
 First, let's create a namespace called 'hipstershop' for the application:
@@ -43,10 +43,27 @@ Verify Pods are Running
 kubectl get pods -n hipstershop
 ```
 
-🚀 Now, we need some testing containers
-==============
+output should be similar to the following:
 
-**Deploy Network-MultiTool Pod in the default namespace**
+```
+root@controlplane:~# kubectl get pods -n hipstershop
+NAME                                     READY   STATUS    RESTARTS   AGE
+adservice-6f498fc6c6-lg7hm               1/1     Running   0          2m34s
+cartservice-bc9b949b-k7v8j               1/1     Running   0          2m34s
+checkoutservice-598d5b586d-h984z         1/1     Running   0          2m35s
+currencyservice-6ddbdd4956-x5v5f         1/1     Running   0          2m34s
+emailservice-68fc78478-2btn4             1/1     Running   0          2m35s
+frontend-5bd77dd84b-n4xwv                1/1     Running   0          2m35s
+loadgenerator-8f7d5d8d8-wxnvj            1/1     Running   0          2m34s
+paymentservice-584567958d-t59kr          1/1     Running   0          2m34s
+productcatalogservice-75f4877bf4-9mqld   1/1     Running   0          2m34s
+recommendationservice-646c88579b-wp7gk   1/1     Running   0          2m35s
+redis-cart-5b569cd47-xfj25               1/1     Running   0          2m34s
+shippingservice-79849ddf8-85msj          1/1     Running   0          2m34s
+```
+
+Creating MultiTool container for testing
+==============
 
 The Network-MultiTool pod will be used in two namespaces to test the created network policies.
 
@@ -55,8 +72,6 @@ First, deploy the MultiTool into the default namespace:
 ```bash
 kubectl run multitool --image=wbitt/network-multitool
 ```
-
-**Deploy a second copy of Network-Multitool to the hipstershop namespace**
 
 Next, deploy a copy of the Mutlitool into the hipstershop namespace:
 

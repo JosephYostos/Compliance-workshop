@@ -1,6 +1,6 @@
 ---
 slug: security-policies
-id: icb8lih1y0wl
+id: ny04cfzmr4yb
 type: challenge
 title: create Policies
 teaser: Apply Security Policies to restrict access

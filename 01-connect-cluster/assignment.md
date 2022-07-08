@@ -65,7 +65,7 @@ Installation process will take around 5 minutes
 Use the terminal to check the calico cloud instalation status:
 
 ```
-kubectl get installer default --namespace calico-cloud -o jsonpath --template '{.status}'
+kubectl get installer default --namespace calico-cloud -o jsonpath --template '{.status}{"\n"}'
 ```
 
 once installtion complete the state will change from **installing** to **done**

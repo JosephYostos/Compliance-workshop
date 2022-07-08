@@ -54,7 +54,7 @@ kubectl label pods --all -n hipstershop pci=true
 Then, verify the labels are applied:
 
 ```bash
-kubectl get pods -n hipstershop --show-labels
+kubectl get pods -n hipstershop --show-labels | grep pci=true
 ```
 ```bash
 tigera@bastion:~$ kubectl get pods -n hipstershop --show-labels
@@ -137,7 +137,7 @@ Now go to calico cloud Ui and check the created tiers
 After creating our tiers, we'll apply some general global policies to them before we start creating our main policies. These policies include allowing traffic to kube-dns from all pods, passing traffic that doesn't explicitly match in the tier and finally a default deny policy.
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-create-policies/mainfest/2.2-pass-dns-default-deny-policy.yaml
+kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-security-policies/mainfest/2.2-pass-dns-default-deny-policy.yaml
 ```
 
 Now go to calico cloud UI and check the created policies under each tier
@@ -153,7 +153,7 @@ In this example, we will apply two global policies:
 - pci-allowlist:  allow ingress traffic to the frontend over port 8080
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-create-policies/mainfest/2.3-pci-isolation-policy.yaml
+kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-security-policies/mainfest/2.3-pci-isolation-policy.yaml
 ```
 Now go to calico cloud UI and make sure the two policies have created under the security tier.
 
@@ -172,7 +172,7 @@ We will run two tests:
 Before we start we need to allow egress traffic from the pods in the default namespace:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-create-policies/mainfest/2.4-default-egress-policy.yaml
+kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-security-policies/mainfest/2.4-default-egress-policy.yaml
 ```
 
 Now, let's run our test
@@ -213,7 +213,7 @@ kubectl label pod multitool pci=true
 And we can test again:
 
 ```bash
-kubectl exec -t multitool -- sh -c 'nc -zvw 3 cartservice.hipstershop 7070
+kubectl exec -t multitool -- sh -c 'nc -zvw 3 cartservice.hipstershop 7070'
 ```
 Now, we can successfully connect from the MultiTool pod in the default namespace to a service in the hipstershop namespace as long as they both have the 'pci=true' label.
 
@@ -249,24 +249,25 @@ recommendationservice | productcatalogservice | 3550
 This results in the following policy which we can now apply to the app-hipstershop tier using:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-create-policies/mainfest/2.6-hipstershop-policy.yaml
+kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-security-policies/mainfest/2.6-hipstershop-policy.yaml
 ```
-we will have to go back and make a modification to our PCI Restriction and Tenant Isolation Policies to completely enable our microsegmentation. Right now the PCI policy allows communication between all the 'pci=true' pods and the Tenant Isolation policy allows open communication between pods with the 'tenant=hipstershop' label. We want to pass this decision to the 'app-hipstershop' tier so we will apply the following update:
+we will have to go back and make a modification to our PCI Restriction to completely enable our microsegmentation. Right now the PCI policy allows communication between all the 'pci=true' pods. We want to pass this decision to the 'app-hipstershop' tier so we will apply the following update:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-create-policies/mainfest/2.7-pci-policy-update.yaml
-kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-create-policies/mainfest/2.8-tenant-isolation-update.yaml
+kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/03-security-policies/mainfest/2.7-pci-policy-update.yaml
 ```
 
 Once this is applied, the policy inside of the 'app-hipstershop' tier should apply and give us microsegmentation inside of our application namespace. The Policy Board should show traffic being allowed by most of our policies:
 
 ![Image Description](../assets/policy-board.png)
 
+===> add example for testing (i.e. testing from cart to redis service ofer ports 6379 and 6380)
+
  Limiting Egress Access
 ============
-Now that we've implemented our microsegmentation policy, there's one last type of policy we should apply; a global egress access policy.
+Now that we've implemented our microsegmentation policy, there's one last type of policy we should apply is the DNS policy.
 
-A global egress access policy allows us to limit what external resources the pods in our cluster can reach. To build this we need two pieces:
+DNS policy allows us to limit what external resources the pods in our cluster can reach. To build this we need two pieces:
 1. A GlobalNetworkSet with a list of approved external domains.
 2. An egress policy that applies globally and references our GlobalNetworkSet.
 
@@ -283,7 +284,7 @@ metadata:
 spec:
   nets: []
   allowedEgressDomains:
-    - google.ca
+    - google.com
     - tigera.io
 EOF
 ```
@@ -315,22 +316,25 @@ spec:
 EOF
 ```
 
-Now any pod that doesn't have a more permissive egress policy will only be allowed to access 'google.ca' and 'tigera.io' and we can test this with our 'multitool' pod in the 'hisptershop' namespace.
+Now any pod that doesn't have a more permissive egress policy will only be allowed to access 'google.com' and 'tigera.io' and we can test this with our 'multitool' pod in the 'hisptershop' namespace.
 
-First we'll exec into our multitool pod in the 'hipstershop' namespace:
+Let's exec into our multitool pod in the 'hipstershop' namespace and try to connect to a few domains (google.ca, tigera.io, github.com):
+
 ```bash
-kubectl exec -n hipstershop multitool --stdin --tty -- /bin/bash
+kubectl -n hipstershop exec -t multitool -- sh -c 'ping -c 3 tigera.io'
+kubectl -n hipstershop exec -t multitool -- sh -c 'ping -c 3 google.com'
+kubectl -n hipstershop exec -t multitool -- sh -c 'ping -c 3 github.com'
 ```
 
-And then we'll try to connect to a few domains (google.ca, tigera.io, github.com)
+
 ```bash
-bash-5.1# ping -c 3 google.ca
-PING google.ca (172.217.13.195) 56(84) bytes of data.
+bash-5.1# ping -c 3 google.com
+PING google.com (172.217.13.195) 56(84) bytes of data.
 64 bytes from yul03s05-in-f3.1e100.net (172.217.13.195): icmp_seq=1 ttl=107 time=2.06 ms
 64 bytes from yul03s05-in-f3.1e100.net (172.217.13.195): icmp_seq=2 ttl=107 time=1.75 ms
 64 bytes from yul03s05-in-f3.1e100.net (172.217.13.195): icmp_seq=3 ttl=107 time=1.73 ms
 
---- google.ca ping statistics ---
+--- google.com ping statistics ---
 3 packets transmitted, 3 received, 0% packet loss, time 2004ms
 rtt min/avg/max/mdev = 1.729/1.846/2.056/0.148 ms
 bash-5.1# ping -c 3 tigera.io
@@ -349,7 +353,7 @@ PING github.com (140.82.112.3) 56(84) bytes of data.
 3 packets transmitted, 0 received, 100% packet loss, time 2028ms
 ```
 
-As expected our pings to google.ca and tigera.io are successful but our ping to github.com is denied.
+As expected our pings to google.com and tigera.io are successful but our ping to github.com is denied.
 
 Now our policies are complete.
 

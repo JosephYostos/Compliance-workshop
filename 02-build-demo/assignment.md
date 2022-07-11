@@ -1,6 +1,6 @@
 ---
 slug: build-demo
-id: kk05abqfgcyc
+id: rizqnv6xzyxg
 type: challenge
 title: Build demo application
 teaser: Deploy Hipstershop microservices-based application

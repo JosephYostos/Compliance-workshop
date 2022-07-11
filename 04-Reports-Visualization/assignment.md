@@ -1,5 +1,5 @@
 ---
-slug: Reports-Visualization
+slug: reports-visualization
 id: okx4bntetxgr
 type: challenge
 title: Visualization & Reports
@@ -61,20 +61,18 @@ Kibana provides its own set of filtering capabilities to drill down into log dat
 
 💡 Exersice:
 
-1- log in to kibana
-2- Select DNS Dashboards
-3- filter DNS traffic from multitool pod 
+1. log in to kibana
+2. Select DNS Dashboards
+3. filter DNS traffic from multitool pod 
 <details><summary>Click for Hint</summary>
   <pre>add filter `client_name_aggr` is `multitoo`</pre>
 </details>
-4- set time window for the last 2 hours
-5- Export DNS Top 10 external domains 
+4. set time window for the last 2 hours
+5. Export DNS Top 10 external domains 
 
 
 
 🏁 Finish
 =========
 
-## Step 03
-
-If you've viewed the dashboard, click **Check** to finish this track.
+If you've viewed the dashboard, click **Next** to finish this track.

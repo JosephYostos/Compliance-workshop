@@ -19,6 +19,8 @@ timelimit: 600
 Encrypt data in transit
 ===============
 
+![Image Description](../assets/calico-encryption.png)
+
 Calico provideds WireGuard to secure on the wire in-cluster pod traffic in a Calico Enterprise cluster. 
 
 When this feature is enabled, Calico Enterprise automatically creates and manages WireGuard tunnels between nodes providing transport-level security for on-the-wire, in-cluster pod traffic. WireGuard provides formally verified secure and performant tunnels without any specialized hardware.
@@ -39,14 +41,10 @@ sudo lsmod | grep wireguard
 The output should look something like this:
 
 ```bash
-ubuntu@ip-10-0-1-30:~$ sudo lsmod | grep wireguard
-wireguard              81920  0
-curve25519_x86_64      49152  1 wireguard
-libchacha20poly1305    16384  1 wireguard
-libblake2s             16384  1 wireguard
-ip6_udp_tunnel         16384  1 wireguard
-udp_tunnel             20480  1 wireguard
-libcurve25519_generic    49152  2 curve25519_x86_64,wireguard
+root@controlplane:~# sudo lsmod | grep wireguard
+wireguard             221184  0
+ip6_udp_tunnel         16384  2 wireguard,vxlan
+udp_tunnel             16384  2 wireguard,vxlan
 ```
 
 Enable End to End Encryption
@@ -67,25 +65,13 @@ kubectl get nodes -o yaml | grep 'kubernetes.io/hostname\|Wireguard'
 Which will give you the following output showing the nodes hostname as well as the Wireguard Interface Address and PublicKey:
 
 ```bash
-tigera@bastion:~$ kc get nodes -o yaml | grep 'kubernetes.io/hostname\|Wireguard'
-      projectcalico.org/IPv4WireguardInterfaceAddr: 10.48.115.87
-      projectcalico.org/WireguardPublicKey: gsxCZHLjKBjJozxRFiKjbMB3QtVTluQDmbvQVfANmXE=
-      kubernetes.io/hostname: ip-10-0-1-20.ca-central-1.compute.internal
-            f:kubernetes.io/hostname: {}
-            f:projectcalico.org/IPv4WireguardInterfaceAddr: {}
-            f:projectcalico.org/WireguardPublicKey: {}
-      projectcalico.org/IPv4WireguardInterfaceAddr: 10.48.127.254
-      projectcalico.org/WireguardPublicKey: HmNsTyzg7TKvs/Fh0AmA0VEgtS+Ij6xBHqvzXO5VfmA=
-      kubernetes.io/hostname: ip-10-0-1-30.ca-central-1.compute.internal
-            f:kubernetes.io/hostname: {}
-            f:projectcalico.org/IPv4WireguardInterfaceAddr: {}
-            f:projectcalico.org/WireguardPublicKey: {}
-      projectcalico.org/IPv4WireguardInterfaceAddr: 10.48.116.146
-      projectcalico.org/WireguardPublicKey: lDSws3G/G1KP76BGGRpVSXBnTt5N6FCqOodzTUUWs0I=
-      kubernetes.io/hostname: ip-10-0-1-31.ca-central-1.compute.internal
-            f:kubernetes.io/hostname: {}
-            f:projectcalico.org/IPv4WireguardInterfaceAddr: {}
-            f:projectcalico.org/WireguardPublicKey: {}
+root@controlplane:~# kubectl get nodes -o yaml | grep 'kubernetes.io/hostname\|Wireguard'
+      projectcalico.org/IPv4WireguardInterfaceAddr: 192.168.49.85
+      projectcalico.org/WireguardPublicKey: cxDcVb0H8UvANa70Pt1JdShXHNuEDxiQRyIFlwRva3E=
+      kubernetes.io/hostname: controlplane
+      projectcalico.org/IPv4WireguardInterfaceAddr: 192.168.196.152
+      projectcalico.org/WireguardPublicKey: x/vgnM2aIqsMmpAHvgfBUc8qchNgsaOTGHNV0z4C6kg=
+      kubernetes.io/hostname: node01
 ```
 
 On your node you can also view the new interface created by Wireguard with the 'wg' command:
@@ -121,6 +107,4 @@ To view WireGuard statistics in Manager UI, you must enable them. From the left 
 🏁 Finish
 =========
 
-## Step 03
-
-If you've viewed the dashboard, click **Check** to finish this track.
+If you've viewed the dashboard WireGuard statistics, click **Next** to finish this track.

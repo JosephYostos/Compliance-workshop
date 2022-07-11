@@ -28,24 +28,7 @@ timelimit: 600
 
 💡 **(In kubernetes world, labels will make your life easier)**
 
-First, lets manually apply a label to the multitool pod.
-
-```bash
-kubectl label pod multitool mylabel=true
-```
-
-We can then see the resulting label using:
-
-```bash
-kubectl get pod multitool --show-labels
-```
-
-```
-NAME        READY   STATUS    RESTARTS   AGE    LABELS
-multitool   1/1     Running   0          2d6h   mylabel=true,run=multitool
-```
-
-Now lets attach a PCI label to our application pods. Rather than apply the label one by one, label all pods in the hipstershop namespace with 'pci=true' with the following command:
+First, lets attach a PCI label to our application pods. Rather than apply the label one by one, label all pods in the hipstershop namespace with 'pci=true' with the following command:
 
 ```bash
 kubectl label pods --all -n hipstershop pci=true

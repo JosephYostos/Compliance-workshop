@@ -32,6 +32,7 @@ Configuration change alert
 Alert on any changes to global network sets
 
 ```bash
+kubectl apply -f -<<EOF
 apiVersion: projectcalico.org/v3
 kind: GlobalAlert
 metadata:
@@ -49,13 +50,32 @@ spec:
   metric: count
   condition: gt
   threshold: 0
-  ```
+EOF
+```
+
+To trigger this alert creat a new Networkset or edit any of the exsisting ones
+
+```bash
+kubectl apply -f -<<EOF
+kind: GlobalNetworkSet
+apiVersion: projectcalico.org/v3
+metadata:
+  name: empty-networkset
+  labels:
+    external-endpoints: global-trusted
+spec:
+  nets: []
+  allowedEgressDomains:
+EOF
+```
+
 
 Restricted dns access alert
 ===============
 Alert when pod attempts to access restricted domains
 
   ```bash
+kubectl apply -f -<<EOF
   apiVersion: projectcalico.org/v3
 kind: GlobalAlert
 metadata:
@@ -72,6 +92,7 @@ spec:
   metric: count
   condition: gt
   threshold: 0
+EOF
   ```
 
 Unsanctioned lateral movement alert
@@ -80,6 +101,7 @@ Unsanctioned lateral movement alert
 Alert when pods with a specific label (security=strict) accessed by other workloads from other namespaces
 
 ```bash
+kubectl apply -f -<<EOF
 apiVersion: projectcalico.org/v3
 kind: GlobalAlert
 metadata:
@@ -97,6 +119,7 @@ spec:
   metric: sum
   condition: gt
   threshold: 0
+EOF
   ````
 
 

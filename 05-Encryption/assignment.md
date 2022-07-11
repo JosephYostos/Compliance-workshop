@@ -19,8 +19,6 @@ timelimit: 600
 Encrypt data in transit
 ===============
 
-![Image Description](../assets/calico-encryption.png)
-
 Calico provideds WireGuard to secure on the wire in-cluster pod traffic in a Calico Enterprise cluster. 
 
 When this feature is enabled, Calico Enterprise automatically creates and manages WireGuard tunnels between nodes providing transport-level security for on-the-wire, in-cluster pod traffic. WireGuard provides formally verified secure and performant tunnels without any specialized hardware.

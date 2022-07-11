@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Installing WireGuard
+sudo apt install wireguard -y

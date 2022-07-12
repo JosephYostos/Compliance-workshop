@@ -26,7 +26,7 @@ timelimit: 600
  Labeling
 ================
 
-💡 **(In kubernetes world, labels will make your life easier)**
+💡 **In kubernetes world, labels are essential connect identifying metadata with Kubernetes objects.**
 
 First, lets attach a PCI label to our application pods. Rather than apply the label one by one, label all pods in the hipstershop namespace with 'pci=true' with the following command:
 
@@ -57,6 +57,8 @@ redis-cart-74594bd569-vg25j              1/1     Running   0          28h   app=
 shippingservice-85c8d66568-jrdsf         1/1     Running   0          28h   app=shippingservice,pci=true,pod-template-hash=85c8d66568
 ```
 
+![Image Description](../assets/labels-output.png)
+
 Now that all pods are labelled, lets start applying some policies.
 
  Policy Tiers
@@ -64,14 +66,12 @@ Now that all pods are labelled, lets start applying some policies.
 
 💡 *Tiers* are a hierarchical construct used to group policies and enforce higher precedence policies that cannot be circumvented by other teams.
 
-Next, you can determine the priority of policies in tiers (from top to bottom). In the following example, that platform and security tiers use Calico Enterprise global network policies that apply to all pods, while developer teams can safely manage pods within namespaces for their applications and microservices.
-
-![Image Description](../assets/policy-board.png)
+Next, you can determine the priority of policies in tiers (from top to bottom). In the following example, that "platform" and "security" tiers use Calico Enterprise global network policies that apply to all pods, while developer teams can safely manage pods within namespaces for their applications and microservices using "app-hipstershop" tier
 
 Tiers are ordered from left to right, starting with the highest priority tiers.
 Policies are processed in sequential order from top to bottom.
 
-![Image Description](../assets/policy-board.png)
+![Image Description](../assets/policy-processing.png)
 
 For this workshop, we'll be creating 3 tiers in the cluster and utilizing the default tier as well:
 
@@ -108,7 +108,7 @@ spec:
 EOF
 ```
 
-Now go to calico cloud Ui and check the created tiers
+Now go to calico cloud Ui and check the created tiers under `policies` page
 
 ![Image Description](../assets/policy-board.png)
 
@@ -125,7 +125,7 @@ kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-works
 
 Now go to calico cloud UI and check the created policies under each tier
 
-![Image Description](../assets/policy-board.png)
+![Image Description](../assets/global-policies.png)
 
   Security Policies
 ================
@@ -140,7 +140,7 @@ kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-works
 ```
 Now go to calico cloud UI and make sure the two policies have created under the security tier.
 
-![Image Description](../assets/policy-board.png)
+![Image Description](../assets/security-policies.png)
 
 Let's do some testing.
 
@@ -160,7 +160,7 @@ kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-works
 
 Now, let's run our test
 
-1. Test connectivity inside the 'hipstershop' namespace where all pods has label 'pci=true'.
+1- Test connectivity inside the 'hipstershop' namespace where all pods has label 'pci=true'.
 
 From 'multitool' to 'cartservice' in 'hipstershop' namespace:
 ```bash
@@ -173,7 +173,7 @@ kubectl -n hipstershop exec -t multitool -- sh -c 'curl -I frontend 2>/dev/null 
 ```
 As expected, we can reach both services from a pod with the pci=true label.
 
-2. Let's try from a pod without the 'pci=true' label that is outside of the namespace. To do this, we'll use our multitool pod in the default namespace:
+2- Let's try from a pod without the 'pci=true' label that is outside of the namespace. To do this, we'll use our multitool pod in the default namespace:
 
 From 'multitool' in 'default' namespace to 'cartservice' in 'hipstershop' namespace:
 ```bash
@@ -208,7 +208,7 @@ To perform the microsegmentation we will need to know more about how the applica
 
 After reviewing the diagram we can come up with a table of rules that looks like this:
 
-```
+
 Source Service | Destination Service | Destination Port
 --- | --- | ---
 cartservice | redis-cart | 6379
@@ -228,7 +228,7 @@ frontend | shippingservice | 50051
 frontend | adservice | 9555
 loadgenerator | frontend | 8080
 recommendationservice | productcatalogservice | 3550
-```
+
 This results in the following policy which we can now apply to the app-hipstershop tier using:
 
 ```bash
@@ -242,7 +242,7 @@ kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-works
 
 Once this is applied, the policy inside of the 'app-hipstershop' tier should apply and give us microsegmentation inside of our application namespace. The Policy Board should show traffic being allowed by most of our policies:
 
-![Image Description](../assets/policy-board.png)
+![Image Description](../assets/policy-microsegmentation.png)
 
 ===> add example for testing (i.e. testing from cart to redis service ofer ports 6379 and 6380)
 
@@ -268,7 +268,7 @@ spec:
   nets: []
   allowedEgressDomains:
     - google.com
-    - tigera.io
+    - *.tigera.io
 EOF
 ```
 
@@ -337,6 +337,14 @@ PING github.com (140.82.112.3) 56(84) bytes of data.
 ```
 
 As expected our pings to google.com and tigera.io are successful but our ping to github.com is denied.
+
+you can review the created DNS policy and NetworkSet in Calico UI
+
+NetworkSet
+![Image Description](../assets/NetworkSet.png)
+
+DNS Policy
+![Image Description](../assets/dns-policy.png)
 
 Now our policies are complete.
 

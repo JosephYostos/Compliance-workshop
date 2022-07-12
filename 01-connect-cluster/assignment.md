@@ -41,11 +41,7 @@ Once you activate your account with your email, login to calico cloud using the 
 
 Install calico cloud
 ===============
-Click the "Managed Cluster" in your left side of browser.
-
-![Image Description](../assets/managed-cluster.png)
-
-Click on "connect cluster"
+Click the "Managed Cluster" in your left side of browser, then click on "connect cluster"
 
 ![Image Description](../assets/connect-cluster.png)
 
@@ -60,7 +56,7 @@ Copy the installation script and use the terminal tab to run it in your cluster
  Validate what we have done
 ==============
 
-Installation process will take around 5 minutes
+**Installation process will take around 5 minutes**
 
 Use the terminal to check the calico cloud instalation status:
 
@@ -69,6 +65,12 @@ kubectl get installer default --namespace calico-cloud -o jsonpath --template '{
 ```
 
 once installtion complete the state will change from **installing** to **done**
+
+you can also montior the installation status from the `managed clusters` page in claico UI
+
+![Image Description](../assets/Monitor-installation.png) 
+
+
 Make sure that state is **done** before you move to the next challange
 
  Configure log flush intervals

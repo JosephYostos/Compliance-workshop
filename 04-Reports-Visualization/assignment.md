@@ -59,7 +59,7 @@ Kibana provides its own set of filtering capabilities to drill down into log dat
 
 ![Image Description](../assets/kibana_filtering.png)
 
-💡 Exersice:
+💡 Exercise:
 
 1. log in to kibana
 2. Select DNS Dashboards

@@ -95,13 +95,13 @@ hipstershop                  multitool                                        1/
 ✅ Check Hipstershop in calico UI
 ==============
 
-Use Calico Cloud UI to discover the hipstershop application using the "service graph". To view resources in the `hipstershop` namespace click on the `Service Graph` icon on the left menu which will display a top level view of the cluster resources:
+Use Calico Cloud UI to discover the hipstershop application using the "service graph". To view resources in the "hipstershop" namespace click on the `Service Graph` icon on the left menu, then `Default` view which will display a top level view of the cluster resources:
 
 ![Image Description](../assets/service-graph-top-level.png)
 
-Double click on the `Hipstershop` Namespace as highlighted to bring only resources in the `hipstershop` namespace in view along with other resources communicating into or out of the `hipstershop` Namespace.
+Double click on the `Hipstershop` Namespace as highlighted to bring only resources in the "hipstershop" namespace in view along with other resources communicating into or out of the "hipstershop" Namespace.
 
-![Image Description](../assets/service-graph-default.png)
+![Image Description](../assets/service-graph-hipstershop.png)
 
 🏁 Finish
 =========

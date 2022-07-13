@@ -39,6 +39,9 @@ Then, verify the labels are applied:
 ```bash
 kubectl get pods -n hipstershop --show-labels | grep pci=true
 ```
+
+Output should be similar to this:
+
 ```bash
 tigera@bastion:~$ kubectl get pods -n hipstershop --show-labels
 NAME                                     READY   STATUS    RESTARTS   AGE   LABELS
@@ -56,8 +59,6 @@ recommendationservice-cd689fc7d-h6w59    1/1     Running   0          28h   app=
 redis-cart-74594bd569-vg25j              1/1     Running   0          28h   app=redis-cart,pci=true,pod-template-hash=74594bd569
 shippingservice-85c8d66568-jrdsf         1/1     Running   0          28h   app=shippingservice,pci=true,pod-template-hash=85c8d66568
 ```
-
-![Image Description](../assets/labels-output.png)
 
 Now that all pods are labelled, lets start applying some policies.
 
@@ -244,7 +245,30 @@ Once this is applied, the policy inside of the 'app-hipstershop' tier should app
 
 ![Image Description](../assets/policy-microsegmentation.png)
 
-===> add example for testing (i.e. testing from cart to redis service ofer ports 6379 and 6380)
+Let's do a quick test; according to the above table redis-cart should accept communication only from cartservice over port 6379
+
+First, we will exec cartservice to make sure that we can access redis-cart over port '6379'
+
+```bash
+kubectl exec -n hipstershop -it $(kubectl get -n hipstershop po -l app=cartservice -ojsonpath='{.items[0].metadata.name}') -- sh -c 'nc -zvw 3 redis-cart 6379'
+```
+The connection should be open
+
+```
+redis-cart (10.105.202.225:6379) open
+```
+
+Now we want to try to access redis-cart from an unauthorized pod in the hipstershop namespace (i.e. checkoutservice). 
+
+```bash
+kubectl exec -n hipstershop -it $(kubectl get -n hipstershop po -l app=checkoutservice -ojsonpath='{.items[0].metadata.name}') -- sh -c 'nc -zvw 3 redis-cart 6379'
+```
+
+In this case, connection should timeout
+
+```
+nc: redis-cart (10.105.202.225:6379): Operation timed out
+```
 
  Limiting Egress Access
 ============
@@ -267,8 +291,8 @@ metadata:
 spec:
   nets: []
   allowedEgressDomains:
-    - google.com
-    - *.tigera.io
+    - 'google.com'
+    - '*.tigera.io'
 EOF
 ```
 

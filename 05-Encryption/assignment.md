@@ -72,10 +72,10 @@ root@controlplane:~# kubectl get nodes -o yaml | grep 'kubernetes.io/hostname\|W
       kubernetes.io/hostname: node01
 ```
 
-On your node you can also view the new interface created by Wireguard with the 'wg' command:
+On your node you can also view the new interface created by Wireguard with the ```wg``` command:
 
 ```bash
-ubuntu@ip-10-0-1-30:~$ sudo wg
+ubuntu@ip-10-0-1-30:~$ wg
 interface: wireguard.cali
   public key: HmNsTyzg7TKvs/Fh0AmA0VEgtS+Ij6xBHqvzXO5VfmA=
   private key: (hidden)

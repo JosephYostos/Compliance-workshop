@@ -71,6 +71,35 @@ Kibana provides its own set of filtering capabilities to drill down into log dat
 5. Export DNS Top 10 external domains 
 
 
+Compliance reports
+===============
+
+Using the reporting feature of Calico Cloud we can create a number of reports to satisfy the various PCI DSS and SOC 2 reporting requirements.
+Calico Cloud supports the following built-in report types:
+
+- Inventory
+- Network Access
+- Policy-Audit
+- CIS Benchmark
+
+we already scheduled some of reports to on a daily bases
+
+check the `GlobalReports` in your environment
+
+```bash
+kubectl get globalreports
+``` 
+
+For the purpose of teh workshop we will run these reports manually using the folowing script
+
+```bash
+./run-reports.sh
+```
+
+To view the generated reports in calico UI click on `Compliance` from the left menu. You also export the reports
+
+
+![Image Description](../assets/reports.png)
 
 🏁 Finish
 =========

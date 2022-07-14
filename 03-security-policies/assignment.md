@@ -291,8 +291,8 @@ metadata:
 spec:
   nets: []
   allowedEgressDomains:
-    - 'google.com'
-    - '*.tigera.io'
+    - google.com
+    - tigera.io
 EOF
 ```
 

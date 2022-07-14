@@ -32,7 +32,7 @@ Configuration change alert
 Alert on any changes to global network sets
 
 ```bash
-kubectl apply -f -<<EOF
+kubectl apply -f -<<\EOF
 apiVersion: projectcalico.org/v3
 kind: GlobalAlert
 metadata:
@@ -53,10 +53,10 @@ spec:
 EOF
 ```
 
-To trigger this alert creat a new Networkset or edit any of the exsisting ones
+To trigger this alert let's creat a new Networkset
 
 ```bash
-kubectl apply -f -<<EOF
+kubectl apply -f -<<\EOF
 kind: GlobalNetworkSet
 apiVersion: projectcalico.org/v3
 metadata:
@@ -75,8 +75,8 @@ Restricted dns access alert
 Alert when pod attempts to access restricted domains
 
   ```bash
-kubectl apply -f -<<EOF
-  apiVersion: projectcalico.org/v3
+kubectl apply -f -<<\EOF
+apiVersion: projectcalico.org/v3
 kind: GlobalAlert
 metadata:
   name: dns.unsanctioned.access
@@ -95,13 +95,19 @@ spec:
 EOF
   ```
 
+To trigger this alert we generate some traffic from multitool pod to google.com
+
+```bash
+kubectl -n hipstershop exec -t multitool -- sh -c 'ping -c 3 google.com'
+```
+
 Unsanctioned lateral movement alert
 ===============
 
 Alert when pods with a specific label (security=strict) accessed by other workloads from other namespaces
 
 ```bash
-kubectl apply -f -<<EOF
+kubectl apply -f -<<\EOF
 apiVersion: projectcalico.org/v3
 kind: GlobalAlert
 metadata:
@@ -121,6 +127,18 @@ spec:
   threshold: 0
 EOF
   ````
+
+To trigger this alert, first, we will label pod in "hipstershop" namespace with label "security=strict"
+
+```bash
+kubectl label pods --all -n hipstershop security=strict
+```
+
+Now we will try to reach out to any of "hipstershop" microservices from the "default" namespace 
+
+```bash
+kubectl exec -t multitool -- sh -c 'curl -I frontend.hipstershop 2>/dev/null | grep -i http'
+```
 
 
 🏁 Finish

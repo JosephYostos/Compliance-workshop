@@ -30,14 +30,15 @@ tabs:
 difficulty: basic
 timelimit: 12000
 ---
-Create Calico Cloud trial account and login
+Signup and log into your Calico Cloud account.
+Note: Use same email address from instruqt signup for Calicocloud signup
 ===============
 
-Use the calico cloud tab to sign up for a 14 day trial account :
+Use the Calico Cloud tab to get your environment :
 
 <img src="https://github.com/JosephYostos/kubeadm-installation/blob/main/login.png?raw=true" alt="login" width="100%"/>
 
-Once you activate your account with your email, login to calico cloud using the same tab
+Once you activated your Calico Cloud account with your email, login to Calico Cloud using the same tab
 
 Install calico cloud
 ===============
@@ -45,11 +46,11 @@ Click the "Managed Cluster" in your left side of browser, then click on "connect
 
 ![Image Description](../assets/connect-cluster.png)
 
-Enter a name to your cluster, choose kubeadm and click next
+Enter your cluster name, choose kubeadm and click nextt
 
 ![Image Description](../assets/choose-kubeadm.png)
 
-Copy the installation script and use the terminal tab to run it in your cluster
+Copy the installation script and use the terminal tab in Instruqt to run it in your cluster
 
 ![Image Description](../assets/script.png)
 
@@ -58,15 +59,15 @@ Copy the installation script and use the terminal tab to run it in your cluster
 
 **Installation process will take around 5 minutes**
 
-Use the terminal to check the calico cloud instalation status:
+Use the terminal to check the Calico Cloud installation status:
 
 ```
 kubectl get installer default --namespace calico-cloud -o jsonpath --template '{.status}{"\n"}'
 ```
 
-once installtion complete the state will change from **installing** to **done**
+once installtion is complete the state will change from **installing** to **done**
 
-you can also montior the installation status from the `managed clusters` page in claico UI
+Check the installation status from the `managed clusters` page in Calico Cloud
 
 ![Image Description](../assets/Monitor-installation.png) 
 

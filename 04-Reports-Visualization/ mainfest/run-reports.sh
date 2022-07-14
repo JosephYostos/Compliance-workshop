@@ -25,4 +25,4 @@ sed -e "s?<CALICO_VERSION>?$CALICO_VERSION?g" \
   -e "s?<ELASTIC_INDEX_SUFFIX>?$ELASTIC_INDEX_SUFFIX?g" \
   -e "s?<REPORT_START_TIME_UTC>?$START_TIME?g" \
   -e "s?<REPORT_END_TIME_UTC>?$END_TIME?g" \
-  demo/40-compliance-reports/cluster-reporter-pods.yaml | kubectl apply -f -
+  cluster-reporter-pods.yaml | kubectl apply -f -

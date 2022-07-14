@@ -2,3 +2,15 @@
 
 # install jq
 apt install jq -y
+
+# Deploy compliance reports 
+kubectl apply -f https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/04-Reports-Visualization/%20mainfest/daily-cis-results.yaml
+kubectl apply -f https://github.com/JosephYostos/Compliance-workshop/blob/main/04-Reports-Visualization/%20mainfest/cluster-reports.yaml
+
+# donwload cluster-reporter-pods.yaml
+curl -LJO https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/04-Reports-Visualization/%20mainfest/cluster-reporter-pods.yaml
+
+
+# donwload script
+curl -LJO https://raw.githubusercontent.com/JosephYostos/Compliance-workshop/main/04-Reports-Visualization/%20mainfest/manuall-reports.sh
+chmod 777 run-reports.sh

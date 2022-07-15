@@ -2,8 +2,8 @@
 slug: build-demo
 id: rizqnv6xzyxg
 type: challenge
-title: Build demo application
-teaser: Deploy Hipstershop microservices-based application
+title: Build Hipstershop demo application
+teaser: Build microservices-based application and see it in Calico Cloud
 notes:
 - type: text
   contents: In this challange we will build a web-based e-commerce app where users
@@ -22,10 +22,10 @@ difficulty: basic
 timelimit: 600
 ---
 
-🚀 Let's build our Hipstershop application
+🚀 Let's build the Hipstershop application
 ==============
 
-First, let's create a namespace called 'hipstershop' for the application:
+First, create a namespace called 'hipstershop' for the demo application:
 
 ```
 kubectl create namespace hipstershop
@@ -37,13 +37,13 @@ Next we will deploy the Online Boutique (Hipstershop) application to the namespa
 kubectl apply -n hipstershop -f https://raw.githubusercontent.com/GoogleCloudPlatform/microservices-demo/main/release/kubernetes-manifests.yaml
 ```
 
-Verify Pods are Running
+Verify pods are running
 
 ```
 kubectl get pods -n hipstershop
 ```
 
-output should be similar to the following:
+Output should be similar to the following:
 
 ```
 root@controlplane:~# kubectl get pods -n hipstershop
@@ -65,7 +65,7 @@ shippingservice-79849ddf8-85msj          1/1     Running   0          2m34s
 Creating MultiTool container for testing
 ==============
 
-The Network-MultiTool pod will be used in two namespaces to test the created network policies.
+The Network-MultiTool pod will be used in two namespaces to test the created security policies.
 
 First, deploy the MultiTool into the default namespace:
 
@@ -92,10 +92,12 @@ default                      multitool                                        1/
 hipstershop                  multitool                                        1/1     Running            0              31m
 ```
 
-✅ Check Hipstershop in calico UI
+✅ Check Hipstershop in Calico Cloud
 ==============
 
-Use Calico Cloud UI to discover the hipstershop application using the "service graph". To view resources in the "hipstershop" namespace click on the `Service Graph` icon on the left menu, then `Default` view which will display a top level view of the cluster resources:
+Go to Service Graph in Calico Cloud and ensure that hipstershop application is running.
+To view resources in the "hipstershop" namespace click on the `Service Graph` icon on the left menu.
+Click on `Default` view for a top level view of the cluster resources:
 
 ![Image Description](../assets/service-graph-top-level.png)
 

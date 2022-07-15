@@ -2,7 +2,8 @@
 slug: encryption
 id: okx4bnteerty
 type: challenge
-title: Encryption
+title: Encrypt the data-in-transit
+teaser: Secure data-in-transit for your application with Wireguard
 tabs:
 - title: Shell
   type: terminal
@@ -19,9 +20,9 @@ timelimit: 600
 Encrypt data in transit
 ===============
 
-Calico provideds WireGuard to secure on the wire in-cluster pod traffic in a Calico Enterprise cluster. 
+Calico Cloud provideds WireGuard to secure on the wire in-cluster pod traffic.
 
-When this feature is enabled, Calico Enterprise automatically creates and manages WireGuard tunnels between nodes providing transport-level security for on-the-wire, in-cluster pod traffic. WireGuard provides formally verified secure and performant tunnels without any specialized hardware.
+When this capability is enabled, Calico Cloud will automatically create and manage WireGuard tunnels between nodes providing transport-level security for on-the-wire, in-cluster pod traffic for your demo application. WireGuard provides formally verified secure and performant tunnels without any specialized hardware.
 
 
 Install WireGuard
@@ -30,7 +31,7 @@ Install WireGuard
 Before enabling end-to-end encryption with Calico, you must first install WireGuard. In this lab WireGuard is installed by deafult.
 Instructions available here https://www.wireguard.com/install/ (you don't need to install it as it's already installed)
 
-Test to ensure that the wireguard module is loaded using the following command:
+Test to ensure that the Wireguard module is loaded using the following command:
 
 ```bash
 sudo lsmod | grep wireguard
@@ -45,7 +46,7 @@ ip6_udp_tunnel         16384  2 wireguard,vxlan
 udp_tunnel             16384  2 wireguard,vxlan
 ```
 
-Enable End to End Encryption
+Enable End-to-End Encryption
 ===============
 
 To enable end-to-end encryption, we will patch the 'felixconfiguration' with the 'wireguardEnabled' option.
@@ -97,7 +98,7 @@ peer: lDSws3G/G1KP76BGGRpVSXBnTt5N6FCqOodzTUUWs0I=
 
 View WireGuard statistics
 ===============
-To view WireGuard statistics in Manager UI, you must enable them. From the left navbar, click Dashboard, and the Layout Settings icon.
+To view WireGuard statistics in Calico Cloud's dashboard, you must enable them. From the left navigation bar, click Dashboard, and the Layout Settings icon.
 
 ![Image Description](../assets/WireGuard.png)
 
@@ -105,4 +106,4 @@ To view WireGuard statistics in Manager UI, you must enable them. From the left 
 🏁 Finish
 =========
 
-If you've viewed the dashboard WireGuard statistics, click **Next** to finish this track.
+Press **Next** to continue to the next challenge.

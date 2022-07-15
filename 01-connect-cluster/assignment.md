@@ -3,7 +3,7 @@ slug: connect-cluster
 id: x4njq6m0sqwh
 type: challenge
 title: Connect Kubernetes cluster to Calico Cloud
-teaser: secure your clusetr in 5 minutes
+teaser: Connect your cluster in few minutes.
 notes:
 - type: video
   url: ../assets/Compliance.mp4
@@ -40,13 +40,13 @@ Use the Calico Cloud tab to get your environment :
 
 Once you activated your Calico Cloud account with your email, login to Calico Cloud using the same tab
 
-Install calico cloud
+Connecting your demo application with Calico Cloud
 ===============
 Click the "Managed Cluster" in your left side of browser, then click on "connect cluster"
 
 ![Image Description](../assets/connect-cluster.png)
 
-Enter your cluster name, choose kubeadm and click nextt
+Enter your cluster name, choose kubeadm and click next
 
 ![Image Description](../assets/choose-kubeadm.png)
 
@@ -65,7 +65,7 @@ Use the terminal to check the Calico Cloud installation status:
 kubectl get installer default --namespace calico-cloud -o jsonpath --template '{.status}{"\n"}'
 ```
 
-once installtion is complete the state will change from **installing** to **done**
+once installtion is complete the status will change from **installing** to **done**
 
 Check the installation status from the `managed clusters` page in Calico Cloud
 

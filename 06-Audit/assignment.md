@@ -2,7 +2,8 @@
 slug: audit
 id: okx4bntddfty
 type: challenge
-title: Audit
+title: Get compliance reports
+teaser: Leverage pre-built reports for audit and reporting purposes
 tabs:
 - title: Shell
   type: terminal
@@ -19,7 +20,7 @@ timelimit: 600
 Audit Logs
 ===============
 
-Calico cloud audit logs provide security teams and auditors historical data of all changes to resources over time.
+Calico Cloud audit logs provide security, platform and DevOps teams and auditors historical data of all changes to the resources over time.
 
 Calico audit logs are enabled by default for the following resources:
 
@@ -36,7 +37,7 @@ Calico audit logs are enabled by default for the following resources:
 Audit Timeline
 ===============
 
-Policy Audit logs are accessible through the Calico Cloud UI directly through the Timeline feature. To view these logs:
+Policy Audit logs are accessible through the Calico Cloud directly through the Timeline feature. To view these logs:
 
 1. Open the `Timeline` page from the left navigation menu.
 

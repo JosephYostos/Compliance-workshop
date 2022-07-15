@@ -2,7 +2,8 @@
 slug: alerts
 id: uio4bntddfty
 type: challenge
-title: Alerts
+title: Setup alerts and notifications
+teaser: Get notified about suspicious activities and unsanctioned changes in real-time
 tabs:
 - title: Shell
   type: terminal
@@ -21,7 +22,7 @@ Alerts
 
 Calico supports global alerts to notify security and operations teams about unsanctioned or suspicious activity.
 
-Alerts can be configured either through the CLI or through the Calico Cloud UI. In this section we will configure 3 different alerts:  
+Alerts can be configured either through the CLI or through the Calico Cloud. In this section we will configure 3 different alerts:  
 
 - Alerts on configuration change 
 - Alerts on restricted dns access
@@ -53,7 +54,7 @@ spec:
 EOF
 ```
 
-To trigger this alert let's creat a new Networkset
+To trigger this alert creat a new Networkset or edit any of the exsisting ones
 
 ```bash
 kubectl apply -f -<<\EOF
@@ -144,4 +145,4 @@ kubectl exec -t multitool -- sh -c 'curl -I frontend.hipstershop 2>/dev/null | g
 🏁 Finish
 =========
 
-Press **Next** to continue to the next challenge.
+If you've viewed the alerts, click **Finish** to complete this track.

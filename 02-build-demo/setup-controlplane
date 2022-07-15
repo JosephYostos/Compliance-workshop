@@ -1,4 +1,0 @@
-#!/bin/bash
-
-# install dev applicationa and ns
-kubectl apply -f https://raw.githubusercontent.com/tigera-solutions/calicocloud-aks-workshop/main/demo/dev/app.manifests.yaml

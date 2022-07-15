@@ -14,7 +14,7 @@ tabs:
   url: https://www.calicocloud.io/home
   new_window: true
 difficulty: basic
-timelimit: 600
+timelimit: 900
 ---
 
 Audit Logs

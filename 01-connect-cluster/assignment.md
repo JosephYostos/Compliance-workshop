@@ -28,7 +28,7 @@ tabs:
   url: https://www.calicocloud.io/home
   new_window: true
 difficulty: basic
-timelimit: 12000
+timelimit: 900
 ---
 Signup and log into your Calico Cloud account.
 Note: Use same email address from instruqt signup for Calicocloud signup

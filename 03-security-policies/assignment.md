@@ -20,7 +20,7 @@ tabs:
   url: https://www.calicocloud.io/home
   new_window: true
 difficulty: basic
-timelimit: 600
+timelimit: 1200
 ---
 
  Labeling

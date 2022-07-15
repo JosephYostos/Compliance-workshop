@@ -1,5 +1,5 @@
 slug: compliance-workshop
-id: fozhy3nkkvpn
+id: drn6zqtds2kb
 type: track
 title: Self-paced Compliance Workshop for Containers and Kubernetes
 teaser: How to become PCI and SOC 2 compliant with Calico Cloud
@@ -22,4 +22,4 @@ developers:
 - joseph@tigera.io
 private: true
 published: false
-checksum: "15244634759407687915"
+checksum: "13202464702716180200"

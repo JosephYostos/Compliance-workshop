@@ -1,6 +1,6 @@
 ---
 slug: connect-cluster
-id: x4njq6m0sqwh
+id: keqwxtckrn5b
 type: challenge
 title: Connect Kubernetes cluster to Calico Cloud
 teaser: Connect your cluster in few minutes.
@@ -69,7 +69,7 @@ once installtion is complete the status will change from **installing** to **don
 
 Check the installation status from the `managed clusters` page in Calico Cloud
 
-![Image Description](../assets/Monitor-installation.png) 
+![Image Description](../assets/Monitor-installation.png)
 
 
 Make sure that state is **done** before you move to the next challange
@@ -86,5 +86,4 @@ kubectl patch felixconfiguration.p default -p '{"spec":{"flowLogsFileAggregation
 
 🏁 Finish
 =========
-
 To complete this challenge, press **NEXT**.

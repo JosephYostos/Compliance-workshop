@@ -1,6 +1,6 @@
 ---
 slug: build-demo
-id: rizqnv6xzyxg
+id: dqx2ly9cwxfw
 type: challenge
 title: Build Hipstershop demo application
 teaser: Build microservices-based application and see it in Calico Cloud

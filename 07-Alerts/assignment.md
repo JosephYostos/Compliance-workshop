@@ -1,6 +1,6 @@
 ---
 slug: alerts
-id: uio4bntddfty
+id: yixqczysvilz
 type: challenge
 title: Setup alerts and notifications
 teaser: Get notified about suspicious activities and unsanctioned changes in real-time
@@ -22,9 +22,9 @@ Alerts
 
 Calico supports global alerts to notify security and operations teams about unsanctioned or suspicious activity.
 
-Alerts can be configured either through the CLI or through the Calico Cloud. In this section we will configure 3 different alerts:  
+Alerts can be configured either through the CLI or through the Calico Cloud. In this section we will configure 3 different alerts:
 
-- Alerts on configuration change 
+- Alerts on configuration change
 - Alerts on restricted dns access
 - ALerts on unsanctioned lateral movement
 
@@ -75,7 +75,7 @@ Restricted dns access alert
 ===============
 Alert when pod attempts to access restricted domains
 
-  ```bash
+```bash
 kubectl apply -f -<<\EOF
 apiVersion: projectcalico.org/v3
 kind: GlobalAlert
@@ -94,7 +94,7 @@ spec:
   condition: gt
   threshold: 0
 EOF
-  ```
+```
 
 To trigger this alert we generate some traffic from multitool pod to google.com
 
@@ -135,12 +135,21 @@ To trigger this alert, first, we will label pod in "hipstershop" namespace with 
 kubectl label pods --all -n hipstershop security=strict
 ```
 
-Now we will try to reach out to any of "hipstershop" microservices from the "default" namespace 
+Now we will try to reach out to any of "hipstershop" microservices from the "default" namespace
 
 ```bash
 kubectl exec -t multitool -- sh -c 'curl -I frontend.hipstershop 2>/dev/null | grep -i http'
 ```
 
+Now go to Calico Cloud and check the Alerts under `Activity` page
+
+Review the configured alerts
+
+![Image Description](../assets/alerts-configuration.png)
+
+Review the triggered alerts under the alerts list
+
+![Image Description](../assets/alerts-list.png)
 
 🏁 Finish
 =========

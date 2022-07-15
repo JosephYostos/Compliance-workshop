@@ -1,6 +1,6 @@
 ---
 slug: security-policies
-id: 8okvp25etq8h
+id: aczv00f906lb
 type: challenge
 title: Create security policies
 teaser: Apply security policies to restrict access based on compliance requirements
@@ -255,7 +255,7 @@ The connection should be open
 redis-cart (10.105.202.225:6379) open
 ```
 
-Now we want to try to access redis-cart from an unauthorized pod in the hipstershop namespace (i.e. checkoutservice). 
+Now we want to try to access redis-cart from an unauthorized pod in the hipstershop namespace (i.e. checkoutservice).
 
 ```bash
 kubectl exec -n hipstershop -it $(kubectl get -n hipstershop po -l app=checkoutservice -ojsonpath='{.items[0].metadata.name}') -- sh -c 'nc -zvw 3 redis-cart 6379'

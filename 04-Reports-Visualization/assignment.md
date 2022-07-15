@@ -1,6 +1,6 @@
 ---
 slug: reports-visualization
-id: okx4bntetxgr
+id: x1mlzkimgxcf
 type: challenge
 title: Observe activities and interactions within the cluster
 teaser: Get more real-time insights with Dynamic Service and Threat Graph, Flow Visualizer
@@ -68,36 +68,6 @@ For example, use filters to drill into flow log data for specific namespaces and
 4. set time window for the last 2 hours
 5. Export DNS Top 10 external domains
 
-
-Compliance reports
-===============
-
-Using the reporting feature of Calico Cloud you can create a number of reports to satisfy the various PCI DSS and SOC 2 reporting requirements.
-Calico Cloud supports the following built-in report types:
-
-- Inventory
-- Network Access
-- Policy-Audit
-- CIS Benchmark
-
-We have already scheduled some reports to run daily .
-
-Check the `GlobalReports` in your environment
-
-```bash
-kubectl get globalreports
-``` 
-
-For the purpose of the workshop, we will run these reports manually using the following script:
-
-```bash
-./run-reports.sh
-```
-
-To view the generated reports in Calico Cloud click on `Compliance` from the left menu. You also export the reports.
-
-
-![Image Description](../assets/reports.png)
 
 🏁 Finish
 =========

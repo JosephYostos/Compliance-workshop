@@ -1,6 +1,6 @@
 ---
 slug: audit
-id: okx4bntddfty
+id: 74dfcvbjg7zi
 type: challenge
 title: Get compliance reports
 teaser: Leverage pre-built reports for audit and reporting purposes
@@ -73,7 +73,37 @@ To access this information,
 Archive logs
 ===============
 
-Logs can be exported to an external SIEM such as Splunk, syslog, or Amazon S3. For further information see archive logs section in [calico documentaion.](https://docs.tigera.io/v3.14/visibility/elastic/archive-storage) 
+Logs can be exported to an external SIEM such as Splunk, syslog, or Amazon S3. For further information see archive logs section in [calico documentaion.](https://docs.tigera.io/v3.14/visibility/elastic/archive-storage)
+
+Compliance reports
+===============
+
+Using the reporting feature of Calico Cloud you can create a number of reports to satisfy the various PCI DSS and SOC 2 reporting requirements.
+Calico Cloud supports the following built-in report types:
+
+- Inventory
+- Network Access
+- Policy-Audit
+- CIS Benchmark
+
+We have already scheduled some reports to run daily .
+
+Check the `GlobalReports` in your environment
+
+```bash
+kubectl get globalreports
+```
+
+For the purpose of the workshop, we will run these reports manually using the following script:
+
+```bash
+./run-reports.sh
+```
+
+To view the generated reports in Calico Cloud click on `Compliance` from the left menu. You also export the reports.
+
+
+![Image Description](../assets/reports.png)
 
 🏁 Finish
 =========

@@ -1,6 +1,6 @@
 ---
 slug: encryption
-id: okx4bnteerty
+id: yiqvlsoflogn
 type: challenge
 title: Encrypt the data-in-transit
 teaser: Secure data-in-transit for your application with Wireguard

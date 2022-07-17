@@ -242,7 +242,7 @@ Once this is applied, the policy inside of the 'app-hipstershop' tier should app
 
 ![Image Description](../assets/policy-microsegmentation.png)
 
-Let's do a quick test; according to the above table redis-cart should accept communication only from cartservice over port 6379
+Let's do a quick test. According to the above table redis-cart should accept communication only from cartservice over port 6379
 
 First, we will exec cartservice to make sure that we can access redis-cart over port '6379'
 

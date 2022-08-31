@@ -4,6 +4,7 @@ echo Email:
 read EMAIL
 export EMAIL=$EMAIL
 envsubst < /usr/local/bin/calico_installer.yaml | kubectl apply -f -
+sleep 1
 echo
 echo =================
 kubectl describe installer -n calico-cloud   default  | grep Message

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Ask the user for their email address
-echo Email:
+echo Enter your email address:
 read EMAIL
 export EMAIL=$EMAIL
 envsubst < /usr/local/bin/calico_installer.yaml | kubectl apply -f -
